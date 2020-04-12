@@ -6,6 +6,13 @@ timeout 10 $1 $2 > /tmp/verify_$$.cnf 2> /tmp/verify2_$$.cnf;
 status=$?
 # sleep 0.01
 
+# Davide> Propagate eventual failed assertions
+if [ "$status" -eq "134" ]
+then
+    cat /tmp/verify2_$$.cnf
+    exit 134
+fi
+
 #echo "finish with state= $status" >> tmp.dat
 
 if [ "$status" -eq "124" ]
